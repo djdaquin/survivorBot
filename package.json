@@ -1,0 +1,22 @@
+{
+  "name": "survivor_bot",
+  "version": "1.0.0",
+  "description": "reddit bot to play survivor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djdaquin/survivorBot.git"
+  },
+  "keywords": [
+    "reddit"
+  ],
+  "author": "David \"mrcelophane\" d'Aquin, djdaquin",
+  "license": "SEE LICENSE IN \"LICENSE\"",
+  "bugs": {
+    "url": "https://github.com/djdaquin/survivorBot/issues"
+  },
+  "homepage": "https://github.com/djdaquin/survivorBot#readme"
+}
