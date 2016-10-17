@@ -36,13 +36,17 @@ Game.prototype.addContestant = function (name) {
 }
 
 Game.prototype.hit = function (id) {
+  id = id.toUpperCase();
   var target  = this.pool.find(contestant => { return contestant.id === id });
+  if (!target) { return; }
   target.health--;
   if (target.health <= 0) { this.kill(target.id); }
 }
 
 Game.prototype.heal = function (id) {
+  id = id.toUpperCase();
   var target  = this.pool.find(contestant => { return contestant.id === id });
+  if (!target) { return; }
   target.health++;
   if (target.health >= this.safety) { this.save(target.id); }
 }
