@@ -50,3 +50,22 @@ Game.prototype.heal = function (id) {
   target.health++;
   if (target.health >= this.safety) { this.save(target.id); }
 }
+
+Game.prototype.kill = function (id) {
+  // move contestant with this id from pool to graveyard.
+  // store death time (this.count)
+
+  this.checkStatus();
+}
+
+Game.prototype.save = function (id) {
+  // move contestant with this id from pool to haven.
+
+  this.checkStatus()
+}
+
+Game.prototype.checkStatus = function () {
+  // check if the pool only has one contestant in it.
+  // if so, move those in haven into pool and set all scores to min
+  // do so by making new contestants. 
+}
