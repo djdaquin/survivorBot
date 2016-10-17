@@ -15,8 +15,24 @@ var Game = function (name, start, safety) {
   this.participation = {};
 }
 
-var Contestant = function (name, id, startHealth) {
+var Contestant = function (name, startHealth) {
   this.name = name;
   this.health = startHealth;
-  this.id = id;
+}
+
+Game.prototype.addContestant = function (name) {
+  var newContestant = new Contestant (name, this.start);
+  this.pool.push(newContestant);
+}
+
+Game.prototype.hit = function (name) {
+  var target  = this.pool.find(contestant => { return contestant.name = name });
+  target.health--;
+  if (target.health <= 0) { this.kill(target.name); }
+}
+
+Game.prototype.heal = function (name) {
+  var target  = this.pool.find(contestant => { return contestant.name = name });
+  target.health++;
+  if (target.health >= this.safety) { this.save(target.name); }
 }
