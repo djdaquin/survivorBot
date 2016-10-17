@@ -22,17 +22,27 @@ var Contestant = function (name, startHealth) {
 
 Game.prototype.addContestant = function (name) {
   var newContestant = new Contestant (name, this.start);
+  name = name.replace(/[^a-zA-Z0-9]/g, '');
+  var id = name.slice(0, 5).toUpperCase();
+  var i = 0;
+  // Check if 5 digit id is used, if so, replace last character with number until
+  // it is unique.
+  while(this.pool.find(contestant => {return contestant.id === id; })) {
+    var id = id.slice(0, 4) + i;
+    i++;
+  }
+  newContestant.id = i;
   this.pool.push(newContestant);
 }
 
-Game.prototype.hit = function (name) {
-  var target  = this.pool.find(contestant => { return contestant.name = name });
+Game.prototype.hit = function (id) {
+  var target  = this.pool.find(contestant => { return contestant.id === id });
   target.health--;
-  if (target.health <= 0) { this.kill(target.name); }
+  if (target.health <= 0) { this.kill(target.id); }
 }
 
-Game.prototype.heal = function (name) {
-  var target  = this.pool.find(contestant => { return contestant.name = name });
+Game.prototype.heal = function (id) {
+  var target  = this.pool.find(contestant => { return contestant.id === id });
   target.health++;
-  if (target.health >= this.safety) { this.save(target.name); }
+  if (target.health >= this.safety) { this.save(target.id); }
 }
