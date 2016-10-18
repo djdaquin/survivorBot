@@ -35,7 +35,7 @@ Game.prototype.addContestant = function (name) {
   this.pool.push(newContestant);
 }
 
-Game.prototype.hit = function (id) {
+Game.prototype.hurt = function (id) {
   id = id.toUpperCase();
   var target  = this.pool.find(contestant => { return contestant.id === id });
   if (!target) { return; }
@@ -67,5 +67,5 @@ Game.prototype.save = function (id) {
 Game.prototype.checkStatus = function () {
   // check if the pool only has one contestant in it.
   // if so, move those in haven into pool and set all scores to min
-  // do so by making new contestants. 
+  // do so by making new contestants.
 }
