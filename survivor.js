@@ -39,30 +39,46 @@ Game.prototype.hurt = function (id) {
   id = id.toUpperCase();
   var target  = this.pool.find(contestant => contestant.id === id );
   if (!target) { return; }
+  this.count++;
   target.health--;
   if (target.health <= 0) { this.kill(target.id); }
+  // TODO
 };
 
 Game.prototype.heal = function (id) {
   id = id.toUpperCase();
   var target  = this.pool.find(contestant => contestant.id === id);
   if (!target) { return; }
+  // this.count++; This would be a double count as a hurt and heal happen
+  // at the same time.
   target.health++;
   if (target.health >= this.safety) { this.save(target.id); }
 };
 
 Game.prototype.kill = function (id) {
-  // move contestant with this id from pool to graveyard.
+  // Find right contestant
   let targetIndex = this.pool.findIndex(contestant => contestant.id === id);
-
+  if (targetIndex === undefined) {
+    console.error('that character wasn\'t there...and that should not happen');
+    return;
+  }
+  // if you are here, id has been found
   // store death time (this.count)
-
+  this.pool[targetIndex].deathTime = this.count;
+  // remove from the pool and put into the graveyard.
+  this.graveyard.push(this.pool.splice(targetIndex, 1));
   this.checkStatus();
 };
 
 Game.prototype.save = function (id) {
+  // Find right contestant
+  let targetIndex = this.pool.findIndex(contestant => contestant.id === id);
+  if (targetIndex === undefined) {
+    console.error('that character wasn\'t there...and that should not happen');
+    return;
+  }
   // move contestant with this id from pool to haven.
-
+  this.haven.push(this.pool.splice(targetIndex, 1));
   this.checkStatus();
 };
 
