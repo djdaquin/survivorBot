@@ -31,7 +31,7 @@ Game.prototype.addContestant = function (name) {
     var id = id.slice(0, 4) + i;
     i++;
   }
-  newContestant.id = i;
+  newContestant.id = id;
   this.pool.push(newContestant);
 }
 
