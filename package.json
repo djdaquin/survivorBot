@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/djdaquin/survivorBot/issues"
   },
-  "homepage": "https://github.com/djdaquin/survivorBot#readme"
+  "homepage": "https://github.com/djdaquin/survivorBot#readme",
+  "devDependencies": {
+    "eslint": "^3.10.2",
+    "eslint-plugin-import": "^2.2.0"
+  }
 }
