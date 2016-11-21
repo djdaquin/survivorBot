@@ -13,12 +13,12 @@ var Game = function (name, start, safety) {
   this.count = 0;
   // store how many actions each user has made.
   this.participation = {};
-}
+};
 
 var Contestant = function (name, startHealth) {
   this.name = name;
   this.health = startHealth;
-}
+};
 
 Game.prototype.addContestant = function (name) {
   var newContestant = new Contestant (name, this.start);
@@ -28,44 +28,46 @@ Game.prototype.addContestant = function (name) {
   // Check if 5 digit id is used, if so, replace last character with number until
   // it is unique.
   while(this.pool.find(contestant => {return contestant.id === id; })) {
-    var id = id.slice(0, 4) + i;
+    id = id.slice(0, 4) + i;
     i++;
   }
   newContestant.id = id;
   this.pool.push(newContestant);
-}
+};
 
 Game.prototype.hurt = function (id) {
   id = id.toUpperCase();
-  var target  = this.pool.find(contestant => { return contestant.id === id });
+  var target  = this.pool.find(contestant => contestant.id === id );
   if (!target) { return; }
   target.health--;
   if (target.health <= 0) { this.kill(target.id); }
-}
+};
 
 Game.prototype.heal = function (id) {
   id = id.toUpperCase();
-  var target  = this.pool.find(contestant => { return contestant.id === id });
+  var target  = this.pool.find(contestant => contestant.id === id);
   if (!target) { return; }
   target.health++;
   if (target.health >= this.safety) { this.save(target.id); }
-}
+};
 
 Game.prototype.kill = function (id) {
   // move contestant with this id from pool to graveyard.
+  let targetIndex = this.pool.findIndex(contestant => contestant.id === id);
+
   // store death time (this.count)
 
   this.checkStatus();
-}
+};
 
 Game.prototype.save = function (id) {
   // move contestant with this id from pool to haven.
 
-  this.checkStatus()
-}
+  this.checkStatus();
+};
 
 Game.prototype.checkStatus = function () {
   // check if the pool only has one contestant in it.
   // if so, move those in haven into pool and set all scores to min
   // do so by making new contestants.
-}
+};
