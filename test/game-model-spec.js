@@ -7,7 +7,7 @@ const Game = require('../models/game.js');
 
 describe('Game Model', function () {
   it('should exist', function () {
-    const game = new Game;
+    const game = new Game();
     expect(game).to.exist;
   });
 });
