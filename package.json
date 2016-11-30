@@ -4,7 +4,8 @@
   "description": "reddit bot to play survivor",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --recursive",
+    "cat": "mocha --recursive --reporter nyan"
   },
   "repository": {
     "type": "git",
