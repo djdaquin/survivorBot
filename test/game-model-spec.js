@@ -3,14 +3,15 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-const Game = require('../models/game.js');
+const GameState = require('../models/gamestate.js');
 
-describe('Game Model', function () {
+describe('GameState Model', function () {
   it('should exist', function () {
-    expect(Game).to.be.ok;
+    expect(GameState).to.be.ok;
   });
+  const game = GameState();
   it('should return something', function () {
-    const game = new Game();
     expect(game).to.exist;
   });
+  it('should take a ');
 });
