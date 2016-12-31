@@ -41,9 +41,19 @@
  *                             killed who.
  */
 const gameStateCreator = function (game, characters, actions) {
-  actions;
-  return {};
+  actions; // remove this. It is here to prevent arguments error.
+           // remove it as soon as we actually use actions.
+  const gameState = {}; // this will be what is returned.
 
+  // handle adding the game information.
+  if (game){
+    gameState.gameHPStart = game.start;
+    gameState.gameHPSafety = game.safety;
+    gameState.gameID = game.id;
+    gameState.gameURL = game.url;
+  }
+
+  return gameState;
 };
 
 module.exports = gameStateCreator;
