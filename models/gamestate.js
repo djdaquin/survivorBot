@@ -51,6 +51,11 @@ const gameStateCreator = function (game, characters, actions) {
     gameState.gameHPSafety = game.safety;
     gameState.gameID = game.id;
     gameState.gameURL = game.url;
+  } else { // no game info is given
+    gameState.gameHPStart = 10;
+    gameState.gameHPSafety = 30;
+    gameState.gameID = null;
+    gameState.gameURL = null;
   }
 
   return gameState;

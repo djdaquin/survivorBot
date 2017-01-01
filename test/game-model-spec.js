@@ -50,4 +50,10 @@ describe('GameState Model', function () {
     expect(game.gameID).to.equal(1);
   });
 
+  it ('should have default game values', function () {
+    const game = GameState(null, characters, actions);
+    expect(game).to.have.keys('gameHPStart', 'gameHPSafety',
+      'gameURL', 'gameID');
+  });
+
 });
