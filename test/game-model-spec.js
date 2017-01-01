@@ -42,7 +42,7 @@ describe('GameState Model', function () {
 
   it('should have the game information in it', function (){
     const game = GameState(gameObject, characters, actions);
-    expect(game).to.have.keys('gameHPStart', 'gameHPSafety',
+    expect(game).to.contain.keys('gameHPStart', 'gameHPSafety',
       'gameURL', 'gameID');
     expect(game.gameHPStart).to.equal(10);
     expect(game.gameHPSafety).to.equal(30);
@@ -50,10 +50,23 @@ describe('GameState Model', function () {
     expect(game.gameID).to.equal(1);
   });
 
-  it ('should have default game values', function () {
+  it('should have default game values', function () {
     const game = GameState(null, characters, actions);
-    expect(game).to.have.keys('gameHPStart', 'gameHPSafety',
+    expect(game).to.contain.keys('gameHPStart', 'gameHPSafety',
       'gameURL', 'gameID');
+    expect(game.gameHPStart).to.be.ok;
+    expect(game.gameHPSafety).to.be.ok;
   });
 
+  it('should have zones to hold the characters in', function () {
+    const game = GameState(gameObject, characters, actions);
+    expect(game).to.have.property('characters');
+    expect(game.characters).to.have.keys('alive', 'dead', 'safe');
+  });
+
+  it ('should put characters in "alive" zone to start', function (){
+    const game = GameState(gameObject, characters, actions);
+    expect(game.characters.alive).to.be.an('array');
+    expect(game.characters.alive.length).to.equal(4);
+  });
 });

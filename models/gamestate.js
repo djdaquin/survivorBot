@@ -58,6 +58,23 @@ const gameStateCreator = function (game, characters, actions) {
     gameState.gameURL = null;
   }
 
+  // Handle character initilization
+
+  gameState.characters = {};
+  //shortcut
+  const gsCharacters = gameState.characters;
+  gsCharacters.alive = [];
+  gsCharacters.dead = [];
+  gsCharacters.safe = [];
+
+  // Add characters to alive pool to start, setting them up as game objects
+  // as well
+  if(characters){
+    gsCharacters.alive = characters.map((char) => {
+      char.hp = gameState.gameHPStart;
+    });
+  }
+
   return gameState;
 };
 
