@@ -69,4 +69,9 @@ describe('GameState Model', function () {
     expect(game.characters.alive).to.be.an('array');
     expect(game.characters.alive.length).to.equal(4);
   });
+
+  it('should put characters in alphabetical order', function () {
+    const game = GameState(gameObject, characters, actions);
+    expect(game.characters.alive[0].name).to.equal('Batman');
+  })
 });

@@ -72,6 +72,16 @@ const gameStateCreator = function (game, characters, actions) {
   if(characters){
     gsCharacters.alive = characters.map((char) => {
       char.hp = gameState.gameHPStart;
+      return char;
+    }).sort((a, b) => {
+      //sort alphabetically
+      if (a.name < b.name){
+        return -1;
+      } else if(b.name < a.name){
+        return 1;
+      } else {
+        return 0;
+      }
     });
   }
 
