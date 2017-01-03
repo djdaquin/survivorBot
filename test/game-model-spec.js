@@ -42,11 +42,7 @@ describe('GameState Model', function () {
 
   it('should have the game information in it', function (){
     const game = GameState(gameObject, characters, actions);
-<<<<<<< HEAD
     expect(game).to.contain.keys('gameHPStart', 'gameHPSafety',
-=======
-    expect(game).to.have.keys('gameHPStart', 'gameHPSafety',
->>>>>>> 8743d19ef38da19079155989bb9e7ed561b73d7a
       'gameURL', 'gameID');
     expect(game.gameHPStart).to.equal(10);
     expect(game.gameHPSafety).to.equal(30);
@@ -54,7 +50,6 @@ describe('GameState Model', function () {
     expect(game.gameID).to.equal(1);
   });
 
-<<<<<<< HEAD
   it('should have default game values', function () {
     const game = GameState(null, characters, actions);
     expect(game).to.contain.keys('gameHPStart', 'gameHPSafety',
@@ -94,6 +89,5 @@ describe('GameState Model', function () {
     const game = GameState(gameObject, characters, actions);
     expect(game.characters.alive[3].hp).to.equal(11);
   });
-=======
->>>>>>> 8743d19ef38da19079155989bb9e7ed561b73d7a
+
 });
