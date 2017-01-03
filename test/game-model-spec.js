@@ -68,10 +68,25 @@ describe('GameState Model', function () {
     const game = GameState(gameObject, characters, actions);
     expect(game.characters.alive).to.be.an('array');
     expect(game.characters.alive.length).to.equal(4);
+    expect(game.characters.alive[0]).to.be.an('object');
   });
 
   it('should put characters in alphabetical order', function () {
     const game = GameState(gameObject, characters, actions);
     expect(game.characters.alive[0].name).to.equal('Batman');
-  })
+  });
+
+  actions.push({ type: 'hurt', characterID: 'spider', user: '/u/survivorBot'});
+
+  it('should lower hp if a character is "hurt"', function () {
+    const game = GameState(gameObject, characters, actions);
+    expect(game.characters.alive[2].hp).to.equal(9);
+  });
+
+  actions.push({ type: 'heal', characterID: 'superm', user: '/u/survivorBot'});
+
+  it('should raise hp if a character is "healed"', function () {
+    const game = GameState(gameObject, characters, actions);
+    expect(game.characters.alive[3].hp).to.equal(11);
+  });
 });

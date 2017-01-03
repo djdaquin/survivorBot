@@ -1,3 +1,6 @@
+const _ = require('underscore');
+
+
 // Game should take an array of actions and return a game state.
 // Should it take just actions or actions and characters?
 // Game, Actions
@@ -84,6 +87,19 @@ const gameStateCreator = function (game, characters, actions) {
       }
     });
   }
+
+  // Start to handle actions.
+  if (!actions) return gameState;
+  // make sure actions are in chronological order.
+
+  // go action by action and adjust the game state
+  actions.forEach((action) => {
+    // make user history object work.
+    // Adjust HP and move characters as appropriate.
+    var target = _.find(gsCharacters.alive, char => char.visid === action.characterID);
+    if(action.type === 'heal') target.hp++;
+    if(action.type === 'hurt') target.hp--;
+  });
 
   return gameState;
 };
