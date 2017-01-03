@@ -76,18 +76,29 @@ describe('GameState Model', function () {
     expect(game.characters.alive[0].name).to.equal('Batman');
   });
 
-  actions.push({ type: 'hurt', characterID: 'spider', user: '/u/survivorBot'});
-
   it('should lower hp if a character is "hurt"', function () {
+    actions.push({ type: 'hurt', characterID: 'spider', user: '/u/survivorBot'});
     const game = GameState(gameObject, characters, actions);
     expect(game.characters.alive[2].hp).to.equal(9);
   });
 
-  actions.push({ type: 'heal', characterID: 'superm', user: '/u/survivorBot'});
-
   it('should raise hp if a character is "healed"', function () {
+    actions.push({ type: 'heal', characterID: 'superm', user: '/u/survivorBot'});
     const game = GameState(gameObject, characters, actions);
     expect(game.characters.alive[3].hp).to.equal(11);
+  });
+
+  it ('should "kill" characters whose HP go to 0', function () {
+    for (let i = 0; i < 9; i++){
+      actions.push({ type: 'hurt', characterID: 'spider', user: '/u/survivorBot'});
+    }
+    const game = GameState(gameObject, characters, actions);
+    expect(game.characters.alive.length).to.equal(3);
+    expect(game.characters.alive.find(function (e) {
+      return e.visid === 'spider';
+    })).to.equal(undefined);
+    expect(game.characters.dead.length).to.equal(1);
+    expect(game.characters.dead[0].name).to.equal('Spiderman');
   });
 
 });

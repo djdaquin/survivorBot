@@ -97,8 +97,18 @@ const gameStateCreator = function (game, characters, actions) {
     // make user history object work.
     // Adjust HP and move characters as appropriate.
     var target = _.find(gsCharacters.alive, char => char.visid === action.characterID);
-    if(action.type === 'heal') target.hp++;
-    if(action.type === 'hurt') target.hp--;
+    if(action.type === 'heal') {
+      target.hp++;
+    }
+
+    if(action.type === 'hurt') {
+      target.hp--;
+      if (target.hp <= 0) {
+        const targetIndex = gsCharacters.alive.indexOf(target);
+        gsCharacters.dead.push(gsCharacters.alive.splice(targetIndex, 1)[0]);
+      }
+    }
+
   });
 
   return gameState;
