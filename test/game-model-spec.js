@@ -119,4 +119,14 @@ describe('GameState Model', function () {
     expect(game).to.be.an('object');
   });
 
+  it('should reset the alive pool when there is only one person in it.', function() {
+    for(let i = 0; i < 11; i++){
+      actions.push({ type: 'hurt', characterID: 'johnsm', user: '/u/survivorBot'});
+    }
+    const game = GameState(gameObject, characters, actions);
+    expect(game.characters.alive.length).to.be.greaterThan(1);
+    expect(game.characters.alive[0].hp).to.equal(10);
+    expect(game.characters.alive[1].hp).to.equal(10);
+  });
+
 });

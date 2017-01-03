@@ -119,6 +119,18 @@ const gameStateCreator = function (game, characters, actions) {
     }
 
     // Handle alive pool hitting 1
+    if(gsCharacters.alive.length <= 1){
+      if (gsCharacters.safe.length + gsCharacters.alive.length === 1){
+        // handle a winner
+      } else {
+        // there is no winner, put all those in the safe zone back into the fray
+        while (gsCharacters.safe.length > 0){
+          gsCharacters.alive.push(gsCharacters.safe.pop());
+        }
+        // set all of the character's health to 10;
+        gsCharacters.alive.forEach(char => char.hp = 10);
+      }
+    }
 
   });
 
