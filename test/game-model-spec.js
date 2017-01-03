@@ -101,4 +101,22 @@ describe('GameState Model', function () {
     expect(game.characters.dead[0].name).to.equal('Spiderman');
   });
 
+  it('should "save" characters whose HP hit the safety mark', function () {
+    for (let i = 0; i < 19; i++){
+      actions.push({ type: 'heal', characterID: 'superm', user: '/u/survivorBot'});
+    }
+    const game = GameState(gameObject, characters, actions);
+    expect(game.characters.alive.length).to.equal(2);
+    expect(game.characters.safe.length).to.equal(1);
+    expect(game.characters.safe[0].name).to.equal('Superman');
+  });
+
+  it('should not break when you try to hurt or heal something that has been '
+  + 'killed or saved before', function (){
+    actions.push({ type: 'heal', characterID: 'superm', user: '/u/survivorBot'});
+    actions.push({ type: 'hurt', characterID: 'spider', user: '/u/survivorBot'});
+    const game = GameState(gameObject, characters, actions);
+    expect(game).to.be.an('object');
+  });
+
 });

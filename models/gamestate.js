@@ -97,8 +97,17 @@ const gameStateCreator = function (game, characters, actions) {
     // make user history object work.
     // Adjust HP and move characters as appropriate.
     var target = _.find(gsCharacters.alive, char => char.visid === action.characterID);
+
+    // Handle if an action got submitted for someone that isn't in the alive
+    // pool anymore.
+    if(!target) return;
+
     if(action.type === 'heal') {
       target.hp++;
+      if(target.hp >= gameState.gameHPSafety){
+        const targetIndex = gsCharacters.alive.indexOf(target);
+        gsCharacters.safe.push(gsCharacters.alive.splice(targetIndex, 1)[0]);
+      }
     }
 
     if(action.type === 'hurt') {
@@ -108,6 +117,8 @@ const gameStateCreator = function (game, characters, actions) {
         gsCharacters.dead.push(gsCharacters.alive.splice(targetIndex, 1)[0]);
       }
     }
+
+    // Handle alive pool hitting 1
 
   });
 
