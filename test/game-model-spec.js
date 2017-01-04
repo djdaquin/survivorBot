@@ -129,4 +129,12 @@ describe('GameState Model', function () {
     expect(game.characters.alive[1].hp).to.equal(10);
   });
 
+  it('should have a winner if there is only one character', function () {
+    for(let i = 0; i < 11; i++){
+      actions.push({ type: 'hurt', characterID: 'superm', user: '/u/survivorBot'});
+    }
+    const game = GameState(gameObject, characters, actions);
+    expect(game.winner).to.equal('Batman');
+  });
+
 });

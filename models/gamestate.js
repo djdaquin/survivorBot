@@ -94,6 +94,8 @@ const gameStateCreator = function (game, characters, actions) {
 
   // go action by action and adjust the game state
   actions.forEach((action) => {
+    // if there is already a winner, stop trying;
+    if (gameState.winner) return;
     // make user history object work.
     // Adjust HP and move characters as appropriate.
     var target = _.find(gsCharacters.alive, char => char.visid === action.characterID);
@@ -121,7 +123,10 @@ const gameStateCreator = function (game, characters, actions) {
     // Handle alive pool hitting 1
     if(gsCharacters.alive.length <= 1){
       if (gsCharacters.safe.length + gsCharacters.alive.length === 1){
-        // handle a winner
+        while (gsCharacters.safe.length > 0){
+          gsCharacters.alive.push(gsCharacters.safe.pop());
+        }
+        gameState.winner = gsCharacters.alive[0].name;
       } else {
         // there is no winner, put all those in the safe zone back into the fray
         while (gsCharacters.safe.length > 0){
@@ -129,6 +134,16 @@ const gameStateCreator = function (game, characters, actions) {
         }
         // set all of the character's health to 10;
         gsCharacters.alive.forEach(char => char.hp = 10);
+        // resort by alphabetical
+        gsCharacters.alive.sort((a, b) => {
+          if (a.name < b.name){
+            return -1;
+          } else if(b.name < a.name){
+            return 1;
+          } else {
+            return 0;
+          }
+        });
       }
     }
   });
