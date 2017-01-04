@@ -44,8 +44,6 @@ const _ = require('underscore');
  *                             killed who.
  */
 const gameStateCreator = function (game, characters, actions) {
-  actions; // remove this. It is here to prevent arguments error.
-           // remove it as soon as we actually use actions.
   const gameState = {}; // this will be what is returned.
 
   // handle adding the game information.
@@ -60,6 +58,8 @@ const gameStateCreator = function (game, characters, actions) {
     gameState.gameID = null;
     gameState.gameURL = null;
   }
+
+  gameState.userHistory = {};
 
   // Handle character initilization
 
@@ -96,7 +96,6 @@ const gameStateCreator = function (game, characters, actions) {
   actions.forEach((action) => {
     // if there is already a winner, stop trying;
     if (gameState.winner) return;
-    // make user history object work.
     // Adjust HP and move characters as appropriate.
     var target = _.find(gsCharacters.alive, char => char.visid === action.characterID);
 
@@ -110,6 +109,8 @@ const gameStateCreator = function (game, characters, actions) {
         const targetIndex = gsCharacters.alive.indexOf(target);
         gsCharacters.safe.push(gsCharacters.alive.splice(targetIndex, 1)[0]);
       }
+      gameState.userHistory[action.user] = gameState.userHistory[action.user] ?
+        ++gameState.userHistory[action.user] : 1;
     }
 
     if(action.type === 'hurt') {
@@ -147,7 +148,6 @@ const gameStateCreator = function (game, characters, actions) {
       }
     }
   });
-
   return gameState;
 };
 

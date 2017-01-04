@@ -137,4 +137,16 @@ describe('GameState Model', function () {
     expect(game.winner).to.equal('Batman');
   });
 
+  // user involvement history
+  it('should have a memory object', function () {
+    const game = GameState(gameObject, characters, actions);
+    expect(game.userHistory).to.exist;
+    expect(game.userHistory).to.be.an('object');
+  });
+
+  it('should have a memory object that contains user participation data', function () {
+    const game = GameState(gameObject, characters, actions);
+    expect(game.userHistory['/u/survivorBot']).to.be.greaterThan(5);
+  });
+
 });
