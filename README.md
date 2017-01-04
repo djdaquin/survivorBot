@@ -1,2 +1,4 @@
 # survivorBot
-Reddit Bot for playing a survivor/attrition based forum game
+Reddit Bot for playing a survivor/attrition based forum game.
+
+Currently, WIP
