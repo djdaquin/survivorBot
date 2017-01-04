@@ -38,3 +38,6 @@ jspm_packages
 
 # Environmental Files
 .env
+
+# Secrets
+snoowrap_config/snoowrap-secrets.js
