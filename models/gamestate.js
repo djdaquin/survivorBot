@@ -72,21 +72,21 @@ const gameStateCreator = function (game, characters, actions) {
 
   // Add characters to alive pool to start, setting them up as game objects
   // as well
-  if(characters){
-    gsCharacters.alive = characters.map((char) => {
-      char.hp = gameState.gameHPStart;
-      return char;
-    }).sort((a, b) => {
-      //sort alphabetically
-      if (a.name < b.name){
-        return -1;
-      } else if(b.name < a.name){
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-  }
+  if(!characters) return gameState;
+
+  gsCharacters.alive = characters.map((char) => {
+    char.hp = gameState.gameHPStart;
+    return char;
+  }).sort((a, b) => {
+    //sort alphabetically
+    if (a.name < b.name){
+      return -1;
+    } else if(b.name < a.name){
+      return 1;
+    } else {
+      return 0;
+    }
+  });
 
   // Start to handle actions.
   if (!actions) return gameState;
@@ -131,7 +131,6 @@ const gameStateCreator = function (game, characters, actions) {
         gsCharacters.alive.forEach(char => char.hp = 10);
       }
     }
-
   });
 
   return gameState;
