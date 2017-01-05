@@ -88,12 +88,22 @@ describe('GameState Model', function () {
     expect(game.characters.alive[3].hp).to.equal(11);
   });
 
+  it('should "save" characters whose HP hit the safety mark', function () {
+    for (let i = 0; i < 19; i++){
+      actions.push({ type: 'heal', characterID: 'superm', user: '/u/survivorBot'});
+    }
+    const game = GameState(gameObject, characters, actions);
+    expect(game.characters.alive.length).to.equal(3);
+    expect(game.characters.safe.length).to.equal(1);
+    expect(game.characters.safe[0].name).to.equal('Superman');
+  });
+
   it ('should "kill" characters whose HP go to 0', function () {
     for (let i = 0; i < 9; i++){
       actions.push({ type: 'hurt', characterID: 'spider', user: '/u/survivorBot'});
     }
     const game = GameState(gameObject, characters, actions);
-    expect(game.characters.alive.length).to.equal(3);
+    expect(game.characters.alive.length).to.equal(2);
     expect(game.characters.alive.find(function (e) {
       return e.visid === 'spider';
     })).to.equal(undefined);
@@ -101,14 +111,10 @@ describe('GameState Model', function () {
     expect(game.characters.dead[0].name).to.equal('Spiderman');
   });
 
-  it('should "save" characters whose HP hit the safety mark', function () {
-    for (let i = 0; i < 19; i++){
-      actions.push({ type: 'heal', characterID: 'superm', user: '/u/survivorBot'});
-    }
+  it('should mark the time of death for characters that are killed', function () {
     const game = GameState(gameObject, characters, actions);
-    expect(game.characters.alive.length).to.equal(2);
-    expect(game.characters.safe.length).to.equal(1);
-    expect(game.characters.safe[0].name).to.equal('Superman');
+    expect(game.characters.dead[0].death).to.be.a('number');
+    expect(game.characters.dead[0].death).to.equal(20);
   });
 
   it('should not break when you try to hurt or heal something that has been '

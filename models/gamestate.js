@@ -58,6 +58,8 @@ const gameStateCreator = function (game, characters, actions) {
     gameState.gameID = null;
     gameState.gameURL = null;
   }
+  // initialize turn counter
+  gameState.turnCount = 0;
 
   gameState.userHistory = {};
 
@@ -109,15 +111,21 @@ const gameStateCreator = function (game, characters, actions) {
         const targetIndex = gsCharacters.alive.indexOf(target);
         gsCharacters.safe.push(gsCharacters.alive.splice(targetIndex, 1)[0]);
       }
+      // Keep track of how often user's participate. Only in heal as heals and
+      // hurts should be done at the same time, so avoid double counts.
       gameState.userHistory[action.user] = gameState.userHistory[action.user] ?
         ++gameState.userHistory[action.user] : 1;
+      // Also keep track of how many times total have passed.
+      ++gameState.turnCount;
     }
 
     if(action.type === 'hurt') {
       target.hp--;
       if (target.hp <= 0) {
         const targetIndex = gsCharacters.alive.indexOf(target);
-        gsCharacters.dead.push(gsCharacters.alive.splice(targetIndex, 1)[0]);
+        const theDeceased = gsCharacters.alive.splice(targetIndex, 1)[0];
+        theDeceased.death = gameState.turnCount;
+        gsCharacters.dead.push(theDeceased);
       }
     }
 
