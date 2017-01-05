@@ -5,7 +5,7 @@ const expect = chai.expect;
 
 const GameState = require('../pipeline/gamestate.js');
 
-describe('GameState Model', function () {
+describe('GameState Generator (gamestate.js)', function () {
   it('should exist', function () {
     expect(GameState).to.be.ok;
   });
