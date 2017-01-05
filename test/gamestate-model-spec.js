@@ -3,7 +3,7 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-const GameState = require('../models/gamestate.js');
+const GameState = require('../pipeline/gamestate.js');
 
 describe('GameState Model', function () {
   it('should exist', function () {
