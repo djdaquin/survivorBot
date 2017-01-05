@@ -77,31 +77,30 @@ describe('GameState Model', function () {
   });
 
   it('should lower hp if a character is "hurt"', function () {
-    actions.push({ type: 'hurt', characterID: 'spider', user: '/u/survivorBot'});
+    actions.push({ hurtTarget: 'spider', healTarget: 'superm', user: '/u/survivorBot'});
     const game = GameState(gameObject, characters, actions);
     expect(game.characters.alive[2].hp).to.equal(9);
   });
 
   it('should raise hp if a character is "healed"', function () {
-    actions.push({ type: 'heal', characterID: 'superm', user: '/u/survivorBot'});
     const game = GameState(gameObject, characters, actions);
     expect(game.characters.alive[3].hp).to.equal(11);
   });
 
   it('should "save" characters whose HP hit the safety mark', function () {
-    for (let i = 0; i < 19; i++){
-      actions.push({ type: 'heal', characterID: 'superm', user: '/u/survivorBot'});
+    for (let i = 0; i < 9; i++){
+      actions.push({ healTarget: 'superm', hurtTarget: 'spider', user: '/u/survivorBot'});
+    }
+    for (let i = 0; i < 10; i++){
+      actions.push({ healTarget: 'superm', hurtTarget: null, user: '/u/survivorBot'});
     }
     const game = GameState(gameObject, characters, actions);
-    expect(game.characters.alive.length).to.equal(3);
+    expect(game.characters.alive.length).to.equal(2);
     expect(game.characters.safe.length).to.equal(1);
     expect(game.characters.safe[0].name).to.equal('Superman');
   });
 
   it ('should "kill" characters whose HP go to 0', function () {
-    for (let i = 0; i < 9; i++){
-      actions.push({ type: 'hurt', characterID: 'spider', user: '/u/survivorBot'});
-    }
     const game = GameState(gameObject, characters, actions);
     expect(game.characters.alive.length).to.equal(2);
     expect(game.characters.alive.find(function (e) {
@@ -114,7 +113,7 @@ describe('GameState Model', function () {
   it('should mark the time of death for characters that are killed', function () {
     const game = GameState(gameObject, characters, actions);
     expect(game.characters.dead[0].death).to.be.a('number');
-    expect(game.characters.dead[0].death).to.equal(20);
+    expect(game.characters.dead[0].death).to.equal(10);
   });
 
   it('should not break when you try to hurt or heal something that has been '
@@ -127,7 +126,7 @@ describe('GameState Model', function () {
 
   it('should reset the alive pool when there is only one person in it.', function() {
     for(let i = 0; i < 11; i++){
-      actions.push({ type: 'hurt', characterID: 'johnsm', user: '/u/survivorBot'});
+      actions.push({ hurtTarget: 'johnsm', healTarget: null, user: '/u/survivorBot'});
     }
     const game = GameState(gameObject, characters, actions);
     expect(game.characters.alive.length).to.be.greaterThan(1);
@@ -137,7 +136,7 @@ describe('GameState Model', function () {
 
   it('should have a winner if there is only one character', function () {
     for(let i = 0; i < 11; i++){
-      actions.push({ type: 'hurt', characterID: 'superm', user: '/u/survivorBot'});
+      actions.push({ hurtTarget: 'superm', healTarget: null, user: '/u/survivorBot'});
     }
     const game = GameState(gameObject, characters, actions);
     expect(game.winner).to.equal('Batman');

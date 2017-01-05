@@ -8,21 +8,14 @@ const _ = require('underscore');
 /**
  * Action Objects:
  *
- *  Main Action
  *  {
- *    type: 'hurt' OR 'heal',
- *    characterID: 'abcdef',
+ *    hurtTarget: 'abcde1'
+ *    healTarget: 'abcdef',
  *    created_at: '1/1/1900 12:00:01',
  *    user: '/u/reddit_user_name'
  *  }
  *  // hurt lowers hp by one
  *  // heal raises hp by one
- *
- *  Admin Actions
- *  {
- *    type: 'set'
- *    characterID: 'abcdef',
- *  } // sets hp to certain amount. Can be used to create bosses or something
  *
  */
 
@@ -99,30 +92,33 @@ const gameStateCreator = function (game, characters, actions) {
     // if there is already a winner, stop trying;
     if (gameState.winner) return;
     // Adjust HP and move characters as appropriate.
-    var target = _.find(gsCharacters.alive, char => char.visid === action.characterID);
-
+    let healTarget = action.healTarget ?
+      _.find(gsCharacters.alive, char => char.visid === action.healTarget) : null;
+    let hurtTarget = action.hurtTarget ?
+      _.find(gsCharacters.alive, char => char.visid === action.hurtTarget) : null;
     // Handle if an action got submitted for someone that isn't in the alive
     // pool anymore.
-    if(!target) return;
+    if(healTarget === undefined) return;
+    if(hurtTarget === undefined) return;
 
-    if(action.type === 'heal') {
-      target.hp++;
-      if(target.hp >= gameState.gameHPSafety){
-        const targetIndex = gsCharacters.alive.indexOf(target);
+    //Keep track of user history
+    gameState.userHistory[action.user] = gameState.userHistory[action.user] ?
+      ++gameState.userHistory[action.user] : 1;
+    // Also keep track of how many times total have passed.
+    ++gameState.turnCount;
+
+    if(healTarget) {
+      ++healTarget.hp;
+      if(healTarget.hp >= gameState.gameHPSafety){
+        const targetIndex = gsCharacters.alive.indexOf(hurtTarget);
         gsCharacters.safe.push(gsCharacters.alive.splice(targetIndex, 1)[0]);
       }
-      // Keep track of how often user's participate. Only in heal as heals and
-      // hurts should be done at the same time, so avoid double counts.
-      gameState.userHistory[action.user] = gameState.userHistory[action.user] ?
-        ++gameState.userHistory[action.user] : 1;
-      // Also keep track of how many times total have passed.
-      ++gameState.turnCount;
     }
 
-    if(action.type === 'hurt') {
-      target.hp--;
-      if (target.hp <= 0) {
-        const targetIndex = gsCharacters.alive.indexOf(target);
+    if(hurtTarget) {
+      --hurtTarget.hp;
+      if (hurtTarget.hp <= 0) {
+        const targetIndex = gsCharacters.alive.indexOf(hurtTarget);
         const theDeceased = gsCharacters.alive.splice(targetIndex, 1)[0];
         theDeceased.death = gameState.turnCount;
         gsCharacters.dead.push(theDeceased);
