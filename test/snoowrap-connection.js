@@ -1,4 +1,4 @@
-/*global describe it */
+/*global describe it xit */
 
 const chai = require('chai');
 const chaiaspromised = require('chai-as-promised');
@@ -12,7 +12,7 @@ describe('Snoowrap/reddit connection', function () {
   it('should exist', function () {
     expect(r).to.be.ok;
   });
-  it('should return not an error', function () {
+  xit('should return not an error', function () {
     return expect(r.getInbox()).to.eventually.be.an('array');
   });
 });
