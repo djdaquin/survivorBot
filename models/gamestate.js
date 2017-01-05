@@ -97,7 +97,8 @@ const gameStateCreator = function (game, characters, actions) {
     let hurtTarget = action.hurtTarget ?
       _.find(gsCharacters.alive, char => char.visid === action.hurtTarget) : null;
     // Handle if an action got submitted for someone that isn't in the alive
-    // pool anymore.
+    // pool anymore. Ignores null as that was intentional for testing or setting
+    // purposes.
     if(healTarget === undefined) return;
     if(hurtTarget === undefined) return;
 
