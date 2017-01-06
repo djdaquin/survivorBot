@@ -3,6 +3,9 @@
 const chai = require('chai');
 const expect = chai.expect;
 
+const gameObject = require('./fixtures/sampleGameObject');
+const characters = require('./fixtures/sampleCharacters');
+
 const GameState = require('../pipeline/gamestate.js');
 
 describe('GameState Generator (gamestate.js)', function () {
@@ -14,30 +17,6 @@ describe('GameState Generator (gamestate.js)', function () {
     expect(game).to.exist;
   });
 
-  const gameObject = {
-    start: 10,
-    safety: 30,
-    url: 'http://www.reddit.com/r/testing/comments/abc123/survivor',
-    id: 1,
-  };
-  const characters = [
-    {
-      name: 'John Smith',
-      visid: 'johnsm',
-    },
-    {
-      name: 'Spiderman',
-      visid: 'spider',
-    },
-    {
-      name: 'Superman',
-      visid: 'superm',
-    },
-    {
-      name: 'Batman',
-      visid: 'batman',
-    }
-  ];
   const actions = [];
 
   it('should have the game information in it', function (){
