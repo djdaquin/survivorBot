@@ -54,3 +54,8 @@ User's on Cooldown:
 |Username|Actions|
 |--------|-------|
 |/u/SurvivorBot|35
+
+
+---
+This is a bot. If you have any questions or I begin acting erratically, please
+talk to my creator, /u/mrcelophane.
