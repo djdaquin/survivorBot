@@ -14,6 +14,8 @@ const redditFormattingGenerator = function (gameState) {
     markdown = markdown + '\n|' + c.visid + '|' + c.name + '|' + c.hp;
   });
 
+  markdown = markdown + '\n\n### Haven: \n\n|ID|Name|\n|--|----|'
+
   console.log(markdown);
   return markdown;
 };
