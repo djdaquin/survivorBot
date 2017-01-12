@@ -14,9 +14,16 @@ const redditFormattingGenerator = function (gameState) {
     markdown = markdown + '\n|' + c.visid + '|' + c.name + '|' + c.hp;
   });
 
-  markdown = markdown + '\n\n### Haven: \n\n|ID|Name|\n|--|----|'
+  markdown = markdown + '\n\n### Haven: \n\n|ID|Name|\n|--|----|';
   gameState.characters.safe.forEach(c => {
     markdown = markdown + '\n|' + c.visid + '|' + c.name;
+  });
+
+  markdown = markdown + '\n\n### Graveyard:\n\n|ID|Name|Killed|Killer|\n|--|' +
+    '----|------|------|';
+  gameState.characters.dead.forEach(c => {
+    markdown = markdown + '\n|' + c.visid + '|' + c.name + '|' + c.death + '|' +
+      c.killer;
   });
 
   console.log(markdown);
