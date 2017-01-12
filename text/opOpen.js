@@ -26,8 +26,4 @@ cooldown below. \
 Without further to do, here are your contestants! \
 ';
 
-
-
-console.log(text);
-
 module.exports = text;
