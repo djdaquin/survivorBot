@@ -24,6 +24,8 @@ You can comment once every 4 hours! Use it wisely! You can check if you are on \
 cooldown below. \
 \n\n\
 Without further to do, here are your contestants! \
+\n\n\
+### Contestants Currently Alive:\
 ';
 
 module.exports = text;
