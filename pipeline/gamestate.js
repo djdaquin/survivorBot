@@ -68,10 +68,14 @@ const gameStateCreator = function (game, characters, actions) {
   // Add characters to alive pool to start, setting them up as game objects
   // as well
   if(!characters) return gameState;
+  characters = characters.slice(0);
 
   gsCharacters.alive = characters.map((char) => {
-    char.hp = gameState.gameHPStart;
-    return char;
+    const newChar = {};
+    newChar.name = char.name;
+    newChar.visid = char.visid;
+    newChar.hp = gameState.gameHPStart;
+    return newChar;
   }).sort((a, b) => {
     //sort alphabetically
     if (a.name < b.name){
@@ -111,7 +115,7 @@ const gameStateCreator = function (game, characters, actions) {
     if(healTarget) {
       ++healTarget.hp;
       if(healTarget.hp >= gameState.gameHPSafety){
-        const targetIndex = gsCharacters.alive.indexOf(hurtTarget);
+        const targetIndex = gsCharacters.alive.indexOf(healTarget);
         gsCharacters.safe.push(gsCharacters.alive.splice(targetIndex, 1)[0]);
       }
     }
