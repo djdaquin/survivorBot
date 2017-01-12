@@ -15,6 +15,9 @@ const redditFormattingGenerator = function (gameState) {
   });
 
   markdown = markdown + '\n\n### Haven: \n\n|ID|Name|\n|--|----|'
+  gameState.characters.safe.forEach(c => {
+    markdown = markdown + '\n|' + c.visid + '|' + c.name;
+  });
 
   console.log(markdown);
   return markdown;
