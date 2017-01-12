@@ -126,6 +126,7 @@ const gameStateCreator = function (game, characters, actions) {
         const targetIndex = gsCharacters.alive.indexOf(hurtTarget);
         const theDeceased = gsCharacters.alive.splice(targetIndex, 1)[0];
         theDeceased.death = gameState.turnCount;
+        theDeceased.killer = action.user;
         gsCharacters.dead.push(theDeceased);
       }
     }

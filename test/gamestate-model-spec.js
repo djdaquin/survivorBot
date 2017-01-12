@@ -95,6 +95,13 @@ describe('GameState Generator (gamestate.js)', function () {
     expect(game.characters.dead[0].death).to.equal(10);
   });
 
+  it('should keep track of who killed the character', function () {
+    const game = GameState(gameObject, characters, actions);
+    expect(game.characters.dead[0].killer).to.be.ok;
+    expect(game.characters.dead[0].killer).to.be.a('string');
+    expect(game.characters.dead[0].killer).to.equal('/u/survivorBot');
+  });
+
   it('should not break when you try to hurt or heal something that has been '
   + 'killed or saved before', function (){
     actions.push({ type: 'heal', characterID: 'superm', user: '/u/survivorBot'});
