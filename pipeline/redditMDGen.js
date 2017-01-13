@@ -37,7 +37,7 @@ const redditFormattingGenerator = function (gameState) {
       markdown = markdown + '\n|' + user.username + '|' + user.count;
     });
 
-  console.log(markdown);
+  markdown = markdown + '\n\n' + require('../text/opClose.js');
   return markdown;
 };
 
