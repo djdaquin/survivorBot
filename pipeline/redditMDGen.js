@@ -1,3 +1,4 @@
+const _ = require('underscore');
 
 const redditFormattingGenerator = function (gameState) {
   let markdown = '';
@@ -25,6 +26,16 @@ const redditFormattingGenerator = function (gameState) {
     markdown = markdown + '\n|' + c.visid + '|' + c.name + '|' + c.death + '|' +
       c.killer;
   });
+
+  markdown = markdown + '\n\n### User Participation:\n\nUser\'s on Cooldown:\
+    \n\n|Username|Time Left|\n|--------|---------|\n|Not Yet|Implemented';
+
+  markdown = markdown + '\n\nUser Actions\n|Username|Actions|\n|--------|-------|';
+  _.map(gameState.userHistory, (count, username) => ({username, count}))
+    .sort((a, b) => b.count - a.count)
+    .forEach((user) => {
+      markdown = markdown + '\n|' + user.username + '|' + user.count;
+    });
 
   console.log(markdown);
   return markdown;
