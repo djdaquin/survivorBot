@@ -30,7 +30,7 @@ const redditFormattingGenerator = function (gameState) {
   markdown = markdown + '\n\n### User Participation:\n\nUser\'s on Cooldown:\
     \n\n|Username|Time Left|\n|--------|---------|\n|Not Yet|Implemented';
 
-  markdown = markdown + '\n\nUser Actions\n|Username|Actions|\n|--------|-------|';
+  markdown = markdown + '\n\nUser Actions\n\n|Username|Actions|\n|--------|-------|';
   _.map(gameState.userHistory, (count, username) => ({username, count}))
     .sort((a, b) => b.count - a.count)
     .forEach((user) => {
