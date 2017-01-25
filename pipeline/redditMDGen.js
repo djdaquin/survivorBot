@@ -15,17 +15,23 @@ const redditFormattingGenerator = function (gameState) {
     markdown = markdown + '\n|' + c.visid + '|' + c.name + '|' + c.hp;
   });
 
-  markdown = markdown + '\n\n### Haven: \n\n|ID|Name|\n|--|----|';
-  gameState.characters.safe.forEach(c => {
-    markdown = markdown + '\n|' + c.visid + '|' + c.name;
-  });
 
-  markdown = markdown + '\n\n### Graveyard:\n\n|ID|Name|Killed|Killer|\n|--|' +
-    '----|------|------|';
-  gameState.characters.dead.forEach(c => {
-    markdown = markdown + '\n|' + c.visid + '|' + c.name + '|' + c.death + '|' +
-      c.killer;
-  });
+  if (gameState.characters.safe.length > 0){
+    markdown = markdown + '\n\n### Haven: \n\n|ID|Name|\n|--|----|';
+    gameState.characters.safe.forEach(c => {
+      markdown = markdown + '\n|' + c.visid + '|' + c.name;
+    });
+  }
+
+  if (gameState.characters.dead.length > 0){
+    markdown = markdown + '\n\n### Graveyard:\n\n|ID|Name|Died on turn|Killer|\n|--|' +
+      '----|------|------|';
+    gameState.characters.dead.forEach(c => {
+      markdown = markdown + '\n|' + c.visid + '|' + c.name + '|' + c.death + '|' +
+        c.killer;
+    });
+
+  }
 
   markdown = markdown + '\n\n### User Participation:\n\nUser\'s on Cooldown:\
     \n\n|Username|Time Left|\n|--------|---------|\n|Not Yet|Implemented';
