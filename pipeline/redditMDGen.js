@@ -6,7 +6,22 @@ const redditFormattingGenerator = function (gameState) {
   // Check if there is a winner or not.
     // If there is, display a message with a game summary.
   if (gameState.winner){
-    return 'There was a winner';
+    markdown = markdown + require('../text/opOpenWinner.js');
+    markdown = markdown + gameState.winner;
+
+    markdown = markdown + '\n\n### User Participation:\n\nUser Actions\n\n|Username|Actions|\n|--------|-------|';
+    _.map(gameState.userHistory, (count, username) => ({username, count}))
+      .sort((a, b) => b.count - a.count)
+      .forEach((user) => {
+        markdown = markdown + '\n|' + user.username + '|' + user.count;
+      });
+
+    markdown = markdown + '\n\nThank you so much for playing. Feel free to friend\
+    this bot to see more games!';
+
+    markdown = markdown + '\n\n' + require('../text/opClose.js');
+
+    return markdown;
   } else {
     // If not, make the MD to show the gamestate.
 
