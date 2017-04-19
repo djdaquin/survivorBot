@@ -10,7 +10,7 @@ const Actions = sequelize.define('action', {
 });
 
 
-sequelize.sync({force: true}).then(function (){
+sequelize.sync({force: true}).then(function (){ //TODO remove the force at some point
   console.log('Actions Table Synced');
   return;
 });

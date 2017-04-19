@@ -9,7 +9,7 @@ const Characters = sequelize.define('character', {
 });
 
 
-sequelize.sync({force: true}).then(function (){
+sequelize.sync({force: true}).then(function (){ //TODO remove the force at some point
   console.log('Characters Table Synced');
   return;
 });
