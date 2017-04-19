@@ -11,6 +11,7 @@ const Actions = sequelize.define('action', {
 
 
 sequelize.sync({force: true}).then(function (){
+  console.log('Actions Table Synced');
   return;
 });
 
